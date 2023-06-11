@@ -19,7 +19,19 @@ class _MyTotalStatsState extends State<MyTotalStats> {
   Widget build(BuildContext context) {
     holdingsProvider = context.watch<HoldingsProvider>();
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(
+          height: 40,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Text(
+            'My Holdings',
+            style: TextStyles.bold22.textColor(),
+          ),
+        ),
         Divider(
           height: 2,
           color: AppColors.text(),

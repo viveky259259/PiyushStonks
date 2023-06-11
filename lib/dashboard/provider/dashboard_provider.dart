@@ -57,3 +57,37 @@ class DashboardProvider extends ChangeNotifier {
   //   }
   // }
 }
+
+double? minPrice(List<Stock> stock) {
+  if (stock.isEmpty) {
+    return 0;
+  }
+
+  if (stock.length == 1) {
+    return stock.first.price ?? 0;
+  }
+
+  return stock
+      .reduce((previousValue, element) =>
+          (previousValue.price ?? 0) < (element.price ?? 0)
+              ? previousValue
+              : element)
+      .price;
+}
+
+double? maxPrice(List<Stock> stock) {
+  if (stock.isEmpty) {
+    return 0;
+  }
+
+  if (stock.length == 1) {
+    return stock.first.price;
+  }
+
+  return stock
+      .reduce((previousValue, element) =>
+          (previousValue.price ?? 0) > (element.price ?? 0)
+              ? previousValue
+              : element)
+      .price;
+}
