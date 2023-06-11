@@ -73,12 +73,16 @@ class _AssetChartState extends State<AssetChart> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (widget.dashboardProvider.chartData.isNotEmpty) ...[
+        if (widget.dashboardProvider.chartData.isNotEmpty &&
+            !widget.dashboardProvider.isLoading) ...[
           title(),
         ],
         if (widget.dashboardProvider.isLoading)
           Center(
-            child: boxShimmer(140, double.infinity),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: boxShimmer(140, double.infinity),
+            ),
           ),
         if (widget.dashboardProvider.chartData.isEmpty &&
             !widget.dashboardProvider.isLoading)
