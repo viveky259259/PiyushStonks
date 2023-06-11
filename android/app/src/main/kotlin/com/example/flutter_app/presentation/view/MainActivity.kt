@@ -14,6 +14,7 @@ import io.flutter.plugins.Pigeon.Stock
 class MainActivity : FlutterFragmentActivity() {
     private val viewModel: StocksViewModel by viewModels()
 
+
     private inner class MyStockApi : Pigeon.StockApi {
         private var isComplete = false
 
@@ -22,20 +23,22 @@ class MainActivity : FlutterFragmentActivity() {
             function: String,
             result: Pigeon.Result<MutableList<Stock>>?
         ) {
-            if (isComplete) {
-                // If a reply has already been submitted, ignore this request
-                return
-            }
             // Set the result and mark it as incomplete
             isComplete = false
 
             viewModel.getStocks(ticker, "TIME_SERIES_WEEKLY")
             viewModel.stocksInfo.observe(this@MainActivity) {
+
                 when (it.status) {
                     Status.SUCCESS -> {
+
                         synchronized(isComplete) {
                             if (!isComplete) {
-                                it.data?.let { stocks -> result?.success(stocks.toMutableList()) }
+                                it.data?.let { stocks ->
+                                    if (stocks.size > 0 && ticker.equals(stocks.get(0).symbol))
+                                        result?.success(stocks.toMutableList())
+
+                                }
                             }
                             isComplete = true
                         }
@@ -45,6 +48,7 @@ class MainActivity : FlutterFragmentActivity() {
                     }
                     Status.ERROR -> {
                         //Handle Error
+                        viewModel.stocksInfo.removeObserver {}
                         isComplete = true
                         it.error?.let { error -> result?.error(error) }
                         Toast.makeText(applicationContext, it.message, Toast.LENGTH_LONG).show()
@@ -57,10 +61,6 @@ class MainActivity : FlutterFragmentActivity() {
     private inner class MyStockInvestApi : Pigeon.StockInvestApi {
         private var isComplete = false
         override fun getStocksInvest(result: Pigeon.Result<MutableList<Pigeon.StockInvest>>?) {
-            if (isComplete) {
-                // If a reply has already been submitted, ignore this request
-                return
-            }
             viewModel.getInvestStocks()
             viewModel.stocksInvestInfo.observe(this@MainActivity) {
                 when (it.status) {

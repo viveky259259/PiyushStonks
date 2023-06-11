@@ -46,8 +46,8 @@ class StocksInvestRepositoryImplTest {
         runBlocking {
             whenever(responseInvestedStocks.isSuccessful).thenReturn(true)
             whenever(responseInvestedStocks.body()).thenReturn(stocksInvestedStocks)
-            whenever(stocksInvestService.getStockInvest()).thenReturn(responseInvestedStocks)
-            whenever(stocksInvestService.getStockInvest().body()).thenReturn(stocksInvestedStocks)
+            whenever(stocksInvestService.getInvestedStocks()).thenReturn(responseInvestedStocks)
+            whenever(stocksInvestService.getInvestedStocks().body()).thenReturn(stocksInvestedStocks)
             whenever(mapper.map(stocksInvestedStocks.stocks)).thenReturn(pigeonInvestedStocks)
 
             val result = sut.getStocksInvest()

@@ -14,7 +14,7 @@ class StocksInvestRepositoryImpl @Inject constructor(
 ) : StocksInvestRepository {
     override suspend fun getStocksInvest(): StockInvestResult {
         return try {
-            val response = stocksInvestService.getStockInvest()
+            val response = stocksInvestService.getInvestedStocks()
             if (response.isSuccessful) {
                 response.body()?.let {
                     StockInvestResult.Success(mapper.map(it.stocks))

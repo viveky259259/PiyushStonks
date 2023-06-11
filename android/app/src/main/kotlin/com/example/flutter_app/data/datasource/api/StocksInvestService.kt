@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface StocksInvestService {
     @GET("query")
-    suspend fun getStockInvest(): Response<InvestedStocks>
+    suspend fun getInvestedStocks(): Response<InvestedStocks>
 }
