@@ -4,9 +4,9 @@ import 'package:flutter_app/data/network/stocks_repository.dart';
 import 'package:flutter_app/utensil/pigeon.dart';
 
 class DashboardProvider extends ChangeNotifier {
-  final StocksRepository _repository;
+  final AssetsRepository _repository;
 
-  DashboardProvider({required StocksRepository repository})
+  DashboardProvider({required AssetsRepository repository})
       : _repository = repository;
 
   List<Stock> _stocks = [];

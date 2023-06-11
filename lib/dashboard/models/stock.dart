@@ -33,7 +33,6 @@ abstract class StockInvestApi {
   List<StockInvest?> getStocksInvest();
 }
 
-// TODO: add id to request and response
 @HostApi()
 abstract class MyApi {
   @async

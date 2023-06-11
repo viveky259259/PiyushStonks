@@ -56,9 +56,8 @@ class AppColors {
 
   static Color boosted() => const Color(0xFF7B61FF);
   static Color allocation() => const Color(0xFF60B7FF);
-  static Color secondContainerColor() => AppColors.isLightMode
-      ? const Color(0xFFF2F2F2)
-      : const Color(0xFFF3B3E56);
+  static Color secondContainerColor() =>
+      AppColors.isLightMode ? const Color(0xFFF2F2F2) : const Color(0xFFF3B3E5);
 
   static Color textSnackBar() => Colors.white;
   static Color negativeSnackbar() => const Color(0xFFE8444D);

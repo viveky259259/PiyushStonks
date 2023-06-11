@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final api = StockApi();
-    final repository = StocksRepository(stockService: api);
+    final repository = AssetsRepository(stockService: api);
 
     return MultiProvider(
       providers: [
