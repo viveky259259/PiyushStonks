@@ -95,86 +95,87 @@ class _AssetChartState extends State<AssetChart> {
               ),
             ],
           ),
-        SizedBox(
-          width: double.infinity,
-          height: 140,
-          child: LineChart(
-            LineChartData(
-              minX: 0,
-              maxX: widget.dashboardProvider.chartData.length.toDouble() - 1,
-              minY: minPrice(widget.dashboardProvider.chartData),
-              maxY: maxPrice(widget.dashboardProvider.chartData),
-              borderData: FlBorderData(show: false),
-              titlesData: FlTitlesData(show: false),
-              gridData: FlGridData(show: false),
-              lineTouchData: LineTouchData(
-                enabled: true,
-                touchCallback: _onTouch,
-                getTouchedSpotIndicator:
-                    (LineChartBarData barData, List<int> indicators) {
-                  return indicators.map((int index) {
-                    final flLine =
-                        FlLine(color: AppColors.accent(), strokeWidth: 0);
+        if (!widget.dashboardProvider.isLoading)
+          SizedBox(
+            width: double.infinity,
+            height: 140,
+            child: LineChart(
+              LineChartData(
+                minX: 0,
+                maxX: widget.dashboardProvider.chartData.length.toDouble() - 1,
+                minY: minPrice(widget.dashboardProvider.chartData),
+                maxY: maxPrice(widget.dashboardProvider.chartData),
+                borderData: FlBorderData(show: false),
+                titlesData: FlTitlesData(show: false),
+                gridData: FlGridData(show: false),
+                lineTouchData: LineTouchData(
+                  enabled: true,
+                  touchCallback: _onTouch,
+                  getTouchedSpotIndicator:
+                      (LineChartBarData barData, List<int> indicators) {
+                    return indicators.map((int index) {
+                      final flLine =
+                          FlLine(color: AppColors.accent(), strokeWidth: 0);
 
-                    final dotData = FlDotData(
-                      getDotPainter: (spot, percent, bar, index) =>
-                          FlDotCirclePainter(
-                        radius: 5,
-                        color: AppColors.accent(),
-                        strokeColor: AppColors.accent(),
-                      ),
-                    );
+                      final dotData = FlDotData(
+                        getDotPainter: (spot, percent, bar, index) =>
+                            FlDotCirclePainter(
+                          radius: 5,
+                          color: AppColors.accent(),
+                          strokeColor: AppColors.accent(),
+                        ),
+                      );
 
-                    return TouchedSpotIndicatorData(flLine, dotData);
-                  }).toList();
-                },
-                touchTooltipData: LineTouchTooltipData(
-                  // maxContentWidth: 0,
-                  // tooltipBgColor: Colors.transparent,
-                  tooltipPadding: const EdgeInsets.all(4),
-                  getTooltipItems: (_) {
-                    TextStyle textStyle = TextStyle(
-                      color: AppColors.accent(),
-                      fontSize: 14,
-                    );
-                    return [LineTooltipItem(tooltipDate, textStyle)];
+                      return TouchedSpotIndicatorData(flLine, dotData);
+                    }).toList();
                   },
-                ),
-              ),
-              lineBarsData: [
-                LineChartBarData(
-                  color: AppColors.positive(),
-                  barWidth: 2,
-                  isStrokeCapRound: true,
-                  dotData: FlDotData(show: false),
-                  belowBarData: BarAreaData(
-                    show: true,
-                    color: AppColors.positive(),
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColors.positive().withOpacity(0),
-                        AppColors.positive().withOpacity(0),
-                        AppColors.positive().withOpacity(0.75),
-                        AppColors.positive()
-                      ],
-                      begin: const Alignment(.50, 1.70),
-                      end: const Alignment(0.5, -0.4),
-                    ),
+                  touchTooltipData: LineTouchTooltipData(
+                    // maxContentWidth: 0,
+                    // tooltipBgColor: Colors.transparent,
+                    tooltipPadding: const EdgeInsets.all(4),
+                    getTooltipItems: (_) {
+                      TextStyle textStyle = TextStyle(
+                        color: AppColors.accent(),
+                        fontSize: 14,
+                      );
+                      return [LineTooltipItem(tooltipDate, textStyle)];
+                    },
                   ),
-                  spots: widget.dashboardProvider.chartData
-                      .asMap()
-                      .entries
-                      .map((entry) {
-                    final index = entry.key;
-                    final point = entry.value;
-
-                    return FlSpot(index.toDouble(), point.price ?? 0);
-                  }).toList(),
                 ),
-              ],
+                lineBarsData: [
+                  LineChartBarData(
+                    color: AppColors.positive(),
+                    barWidth: 2,
+                    isStrokeCapRound: true,
+                    dotData: FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: AppColors.positive(),
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.positive().withOpacity(0),
+                          AppColors.positive().withOpacity(0),
+                          AppColors.positive().withOpacity(0.75),
+                          AppColors.positive()
+                        ],
+                        begin: const Alignment(.50, 1.70),
+                        end: const Alignment(0.5, -0.4),
+                      ),
+                    ),
+                    spots: widget.dashboardProvider.chartData
+                        .asMap()
+                        .entries
+                        .map((entry) {
+                      final index = entry.key;
+                      final point = entry.value;
+
+                      return FlSpot(index.toDouble(), point.price ?? 0);
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
         const HoldingScreen(),
       ],
     );
